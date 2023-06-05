@@ -18,6 +18,7 @@
     <link href="~/vendor/toastr/toastr.min.css" rel="stylesheet">
     <link href="~/vendor/sweetalert/sweetalert.css" rel="stylesheet">
     @await RenderSectionAsync("Estilos", required: false)
+
 </head>
 <body id="page-top">
 
@@ -63,39 +64,49 @@
 
             <!-- Nav Item - Inventario Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseServicios">
+                <a class="nav-link collapsed" href="#" id="Catalogos" data-toggle="collapse" data-target="#collapseCatalogos">
                     <i class="fas fa-fw fa-store"></i>
-                    <span>Servicios</span>
+                    <span>Catálogos</span>
                 </a>
-                <div id="collapseServicios" class="collapse" data-parent="#accordionSidebar">
+                <div id="collapseCatalogos" class="collapse" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="@Url.Action("Index","CategoriaServicio")">Categoría</a>
-                        <a class="collapse-item" href="@Url.Action("Index","Servicio")">Servicio</a>
+                        <a class="collapse-item" href="@Url.Action("Index","Proveedor")">Proveedores</a>
+                        <a class="collapse-item collapsed" id="LineaNegocio" href="javascript:void(0)" aria-expanded="true">
+                            Líneas de Negocio
+                        </a>
+                             <div id="collapseLineaNegocio" class="collapse" data-parent="#collapseCatalogos">
+                                 <div class="bg-white py-2 collapse-inner rounded">
+                                     <a class="collapse-item" href="@Url.Action("Index","Empresa")">Líneas de Negocio</a>
+                                     <a class="collapse-item" href="@Url.Action("Index","CategoriaNegocio")">Categorías</a>
+                                 </div>
+                             </div>
+                        <a class="collapse-item" href="@Url.Action("Index","Banco")">Cuentas de Banco</a>
+                        <hr />
+                        <a class="collapse-item" href="@Url.Action("Index","TipoMovimiento")">Tipo de Pago</a>
+                        <a class="collapse-item" href="@Url.Action("Index","Concepto")">Conceptos</a>
+                        <hr />
+                        <a class="collapse-item collapsed" id="Inventario" href="javascript:void(0)" aria-expanded="true">
+                            Inventario
+                        </a>
+                                <div id="collapseInventario" class="collapse" data-parent="#collapseCatalogos">
+                                    <div class="bg-white py-2 collapse-inner rounded">
+                                        <a class="collapse-item" href="@Url.Action("Index","Producto")">Productos</a>
+                                        <a class="collapse-item" href="@Url.Action("Index","Categoria")">Categorías</a>
+                                    </div>
+                                </div>
+                        @*<a class="collapse-item" href="@Url.Action("Index","CategoriaEmpresa")">Categoría L. N.</a>*@
                     </div>
                 </div>
             </li>
 
-            <!-- Nav Item - Inventario Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInventario">
-                    <i class="fas fa-fw fa-box-open"></i>
-                    <span>Inventario</span>
-                </a>
-                <div id="collapseInventario" class="collapse" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="@Url.Action("Index","Categoria")">Categoría</a>
-                        <a class="collapse-item" href="@Url.Action("Index","Producto")">Producto</a>
-                    </div>
-                </div>
-            </li>
 
             <!-- Nav Item - Venta Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVenta">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseIngresos">
                     <i class="fas fa-cash-register"></i>
-                    <span>Ventas</span>
+                    <span>Ingresos</span>
                 </a>
-                <div id="collapseVenta" class="collapse" data-parent="#accordionSidebar">
+                <div id="collapseIngresos" class="collapse" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="@Url.Action("NuevaVenta","Venta")">Nueva Venta</a>
                         <a class="collapse-item" href="@Url.Action("HistorialVenta","Venta")">Historial de Venta</a>
@@ -103,30 +114,15 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Inventario Collapse Menu -->
+            <!-- Nav Item - Venta Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProveedor">
-                    <i class="fas fa-fw fa-user"></i>
-                    <span>Proveedores</span>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastos">
+                    <i class="fas fa-cash-register"></i>
+                    <span>Gastos</span>
                 </a>
-                <div id="collapseProveedor" class="collapse" data-parent="#accordionSidebar">
+                <div id="collapseGastos" class="collapse" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="@Url.Action("Index","Proveedor")">Proveedores</a>
-
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Inventario Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCliente">
-                    <i class="fas fa-fw fa-user-circle"></i>
-                    <span>Clientes</span>
-                </a>
-                <div id="collapseCliente" class="collapse" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="@Url.Action("Index","Cliente")">Clientes</a>
-
+                        <a class="collapse-item" href="@Url.Action("Gastos","Index")">Gasto</a>
                     </div>
                 </div>
             </li>
@@ -134,7 +130,7 @@
             <!-- Nav Item - Reportes Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportes">
-                    <i class="fas fa-fw fa-line-chart"></i>
+                    <i class="fas fa-fw fa-chart-bar"></i>
                     <span>Reportes</span>
                 </a>
                 <div id="collapseReportes" class="collapse" data-parent="#accordionSidebar">
@@ -241,6 +237,36 @@
     <script src="~/vendor/toastr/toastr.min.js"></script>
     <script src="~/vendor/sweetalert/sweetalert.js"></script>
     <script src="~/vendor/loadingoverlay/loadingoverlay.min.js"></script>
+
+
+    <script>
+    @*Expandir submenu Inventario*@
+        document.getElementById("Inventario").addEventListener("click", function (event) {
+            event.preventDefault();
+            var collapseInventario = document.getElementById("collapseInventario");
+            if (collapseInventario.classList.contains("show")) {
+                collapseInventario.classList.remove("show");
+            } else {
+                collapseInventario.classList.add("show");
+            }
+        });
+        @*Expandir submenu Lineanegocio*@
+        document.getElementById("LineaNegocio").addEventListener("click", function (event) {
+            event.preventDefault();
+            var collapseInventario = document.getElementById("collapseLineaNegocio");
+            if (collapseInventario.classList.contains("show")) {
+                collapseInventario.classList.remove("show");
+            } else {
+                collapseInventario.classList.add("show");
+            }
+        });
+    </script>
+
+
+
+
+
+
 
     @await RenderSectionAsync("Scripts", required: false)
 

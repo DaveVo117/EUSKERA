@@ -38,6 +38,11 @@ function LLenarTabla() {
             { "data": "Giro" },
             { "data": "razonSocial" },
             { "data": "RFC" },
+            { "data": "Calle", "visible": false },
+            { "data": "NumExterior", "visible": false },
+            { "data": "Colonia", "visible": false },
+            { "data": "Municipio", "visible": false },
+            { "data": "Estado", "visible": false },
             { "data": "Domicilio"},
             { "data": "CP" },
             { "data": "Telefono" },
@@ -91,19 +96,18 @@ function LLenarTabla() {
 
 function mostrarModal(modelo = MODELO_BASE) {
     $("#txtId").val(modelo.id)
-    $("#cboCategoria").val(modelo.idGiro == 0 ? $("#cboGiro option:first").val() : modelo.idGiro)
-    $("#txtMarca").val(modelo.razonSocial)
-    $("#txtDescripcion").val(modelo.rfc)
-    $("#txtCodigoBarra").val(modelo.calle)
-    $("#txtStock").val(modelo.numExt)
-    $("#txtPrecio").val(modelo.colonia)
-    $("#txtPrecio").val(modelo.municipio)
-    $("#txtPrecio").val(modelo.estado)
-    $("#txtPrecio").val(modelo.cp)
-    $("#txtPrecio").val(modelo.tel)
-    $("#txtPrecio").val(modelo.eMail)
-    $("#txtPrecio").val(modelo.fecRegistro)
-    $("#cboEstado").val(modelo.snActivo)
+    $("#cboGiro").val(modelo.Giro == 0 ? $("#cboGiro option:first").val() : modelo.Giro)
+    $("#txtRazonSocial").val(modelo.razonSocial)
+    $("#txtRFC").val(modelo.RFC)
+    $("#txtCalle").val(modelo.Calle)
+    $("#txtNumExt").val(modelo.NumExterior)
+    $("#txtColonia").val(modelo.Colonia)
+    $("#txtMunicipio").val(modelo.Municipio)
+    $("#txtEstado").val(modelo.Estado)
+    $("#txtCP").val(modelo.CP)
+    $("#txtTelefono").val(modelo.Telefono)
+    $("#txtEmail").val(modelo.Email)
+    $("#cboEstado").val(modelo.SN_Activo)
 
     $("#modalData").modal("show")
 }
@@ -115,4 +119,76 @@ function mostrarModal(modelo = MODELO_BASE) {
 $("#btnNuevo").click(function () {
     /*    debugger;*/
     mostrarModal()
+})
+
+
+
+let filaSeleccionada;
+$("#tbdata tbody").on("click", ".btn-editar", function () {             //Pasa la informacion de la fila seleciconada para llenar modal
+
+    if ($(this).closest("tr").hasClass("child")) {
+        filaSeleccionada = $(this).closest("tr").prev();
+    } else {
+        filaSeleccionada = $(this).closest("tr");
+    }
+
+    const data = tablaData.row(filaSeleccionada).data();
+    //console.log(data)
+    mostrarModal(data);
+})
+
+$("#tbdata tbody").on("click", ".btn-eliminar", function () {
+
+    let fila;
+
+    if ($(this).closest("tr").hasClass("child")) {
+        fila = $(this).closest("tr").prev();
+    } else {
+        fila = $(this).closest("tr");
+    }
+
+    const data = tablaData.row(fila).data();
+
+    swal({
+        title: "¿Estas seguro?",
+        text: `Eliminar el producto: "${data.txtDescripcion}"`,
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Si, eliminar",
+        cancelButtonText: "No, cancelar",
+        closeOnConfirm: false,
+        closeOnCancel: true
+    },
+        function (respuesta) {
+
+            if (respuesta) {
+
+                $(".showSweetAlert").LoadingOverlay("show");
+                //debugger;
+                fetch(`/Producto/Eliminar?IdProducto=${data.idProducto}`, {
+                    method: "DELETE"
+                })
+                    .then(response => {
+                        $(".showSweetAlert").LoadingOverlay("hide");
+                        return response.ok ? response.json() : Promise.reject(response);
+                    })
+                    .then(responseJson => {
+
+                        if (responseJson.estado) {
+
+                            tablaData.row(fila).remove().draw();
+
+                            swal("Listo!", "El producto fue eliminado", "success")
+                        } else {
+                            swal("Lo sentimos", responseJson.mensaje, "error")
+                        }
+                    })
+
+
+            }
+
+        }
+    )
+
 })

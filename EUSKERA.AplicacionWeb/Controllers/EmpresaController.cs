@@ -2,7 +2,7 @@
 
 namespace EUSKERA.AplicacionWeb.Controllers
 {
-    public class ServicioController : Controller
+    public class EmpresaController : Controller
     {
         public IActionResult Index()
         {
