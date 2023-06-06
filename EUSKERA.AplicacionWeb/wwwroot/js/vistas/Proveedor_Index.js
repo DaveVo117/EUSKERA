@@ -2,17 +2,17 @@
     id: 0,
     idGiro: 0,
     razonSocial: "",
-    rfc: "",
-    calle: "",
-    numExt: 0,
-    colonia: "",
-    municipio: "",
-    estado: "",
-    cp: 0,
-    tel: "",
-    eMail: "",
-    fecRegistro: "",
-    snActivo: 1
+    RFC: "",
+    Calle: "",
+    NumExt: 0,
+    Colonia: "",
+    Municipio: "",
+    Estado: "",
+    CP: 0,
+    Telefono: "",
+    Email: "",
+    FecRegistro: "",
+    SN_Activo: 1
 }//Utilizar inicial minuscula
 
 let tablaData
